@@ -27,6 +27,9 @@ public class OwnerPost {
 	@Column(columnDefinition = "TEXT")
 	private String description;
 	
+	@ManyToOne
+	private SiteUser user;
+	
 	@Column(length = 255)
 	private String image_url;
 	

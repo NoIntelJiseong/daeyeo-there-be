@@ -2,12 +2,14 @@ package com.mysite.eeb.borrower_posts;
 
 import java.time.LocalDateTime;
 
+import com.mysite.eeb.users.SiteUser;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +26,9 @@ public class BorrowerPost {
 	
 	@Column(columnDefinition = "TEXT")
 	private String description;
+	
+	@ManyToOne
+	private SiteUser user;
 	
 	private LocalDateTime created_at;
 	
