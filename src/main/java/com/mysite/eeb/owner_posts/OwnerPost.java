@@ -2,6 +2,9 @@ package com.mysite.eeb.owner_posts;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import com.mysite.eeb.users.SiteUser;
 
 import jakarta.persistence.Column;
@@ -40,10 +43,12 @@ public class OwnerPost {
 	private LocalDateTime available_from;
 	private LocalDateTime available_to;
 	
-	private LocalDateTime created_at;
-	private LocalDateTime updated_at;
-	
-	// TODO: user_id
+	@CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime created_at;
+
+    @LastModifiedDate
+    private LocalDateTime updated_at;
 	
 }
 

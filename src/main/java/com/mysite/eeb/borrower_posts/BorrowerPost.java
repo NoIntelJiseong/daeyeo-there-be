@@ -2,6 +2,9 @@ package com.mysite.eeb.borrower_posts;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import com.mysite.eeb.users.SiteUser;
 
 import jakarta.persistence.Column;
@@ -21,16 +24,23 @@ public class BorrowerPost {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@ManyToOne
+	private SiteUser user;
+	
 	@Column(length = 200)
 	private String title;
 	
 	@Column(columnDefinition = "TEXT")
 	private String description;
 	
-	@ManyToOne
-	private SiteUser user;
+	private LocalDateTime preferred_time_from;
+	private LocalDateTime preferred_time_to;
 	
-	private LocalDateTime created_at;
-	
-	// TODO: user_id, preferred_time_from, preferred_time_to, update_at
+	@CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime created_at;
+
+    @LastModifiedDate
+    private LocalDateTime updated_at;
+    
 }
