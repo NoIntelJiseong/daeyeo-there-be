@@ -2,10 +2,12 @@ package com.mysite.eeb.owner_posts;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.mysite.eeb.users.SiteUser;
+import com.mysite.eeb.users.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,13 +31,5 @@ public class OwnerPostService {
 		o.setImage_url(image_url);
 		
 		o.setCost_hour(cost_hour);
-		o.setCost_day(cost_day);
-		o.setCost_week(cost_week);
-		
-		
-		o.setAvailable_from(available_from);
-		o.setAvailable_to(available_to);
-		
-		this.ownerPostRepository.save(o);	
 	}
 }
