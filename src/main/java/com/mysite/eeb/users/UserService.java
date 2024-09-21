@@ -29,4 +29,16 @@ public class UserService {
 
         return userRepository.save(user);
     }
+	
+	public boolean loginUser(LoginRequest request) {
+        SiteUser user = userRepository.findByUsername(request.getUsername())
+        		.orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        // 비밀번호 비교
+        if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            return true;  // 로그인 성공
+        } else {
+            throw new IllegalArgumentException("Invalid password");
+        }
+    }
 }

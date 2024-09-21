@@ -21,5 +21,16 @@ public class UserController {
     }
     
     @PostMapping("/login")
-    public void login
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            boolean isLoginSuccessful = userService.loginUser(loginRequest);
+            if (isLoginSuccessful) {
+                return ResponseEntity.ok("Login successful.");
+            } else {
+                return ResponseEntity.badRequest().body("Login failed.");
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

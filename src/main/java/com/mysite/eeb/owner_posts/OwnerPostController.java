@@ -2,6 +2,7 @@ package com.mysite.eeb.owner_posts;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Optional;
 
 import com.mysite.eeb.users.UserRepository;
 import com.mysite.eeb.users.UserService;
@@ -27,9 +28,9 @@ public class OwnerPostController {
 		String description = (String) requestData.get("description");
 		String image_url = (String) requestData.get("image_url");
 		
-		SiteUser user = userRepository.findByUsername((String) requestData.get("username"));
+		Optional<SiteUser> user = userRepository.findByUsername((String) requestData.get("username"));
 		
-		
+		SiteUser u = user.get();
 		
 		Integer cost_hour = (Integer) requestData.get("cost_hour");
 		Integer cost_day =  (Integer) requestData.get("cost_day");
@@ -38,7 +39,7 @@ public class OwnerPostController {
 		LocalDateTime available_from = (LocalDateTime) requestData.get("available_from");
 		LocalDateTime available_to = (LocalDateTime) requestData.get("available_to");
 
-		this.ownerPostService.create(user, title, description, image_url, cost_hour, cost_day, cost_week, available_from, available_to);
+		this.ownerPostService.create(u, title, description, image_url, cost_hour, cost_day, cost_week, available_from, available_to);
 	}
 	
 }

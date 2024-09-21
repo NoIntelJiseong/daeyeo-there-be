@@ -32,4 +32,9 @@ public class OwnerPostService {
 		
 		o.setCost_hour(cost_hour);
 	}
+	
+	public OwnerPost getOwnerPostById(Long id) {
+        return ownerPostRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("OwnerPost not found with id: " + id));
+    }
 }
