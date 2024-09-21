@@ -24,14 +24,13 @@ public class BorrowerPost {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
-	private SiteUser user;
-	
 	@Column(length = 200)
 	private String title;
 	
 	@Column(columnDefinition = "TEXT")
 	private String description;
+	
+	private String username;
 	
 	private LocalDateTime preferred_time_from;
 	private LocalDateTime preferred_time_to;
