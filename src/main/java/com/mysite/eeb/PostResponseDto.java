@@ -34,8 +34,8 @@ public class PostResponseDto {
         this.postType = "borrower";
         this.preferredTimeFrom = borrowerPost.getPreferred_time_from();
         this.preferredTimeTo = borrowerPost.getPreferred_time_to();
-        this.createdAt = borrowerPost.getCreated_at();
-        this.updatedAt = borrowerPost.getUpdated_at();
+        this.createdAt = borrowerPost.getCreatedAt();
+        this.updatedAt = borrowerPost.getUpdatedAt();
     }
 
     // Constructor for OwnerPost
@@ -50,7 +50,7 @@ public class PostResponseDto {
         this.costWeek = ownerPost.getCost_week();
         this.availableFrom = ownerPost.getAvailable_from();
         this.availableTo = ownerPost.getAvailable_to();
-        this.createdAt = ownerPost.getCreated_at();
-        this.updatedAt = ownerPost.getUpdated_at();
+        this.createdAt = ownerPost.getCreatedAt();
+        this.updatedAt = ownerPost.getUpdatedAt();
     }
 }

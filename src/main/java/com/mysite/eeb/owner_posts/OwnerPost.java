@@ -5,14 +5,11 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.mysite.eeb.users.SiteUser;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,8 +27,7 @@ public class OwnerPost {
 	@Column(columnDefinition = "TEXT")
 	private String description;
 	
-	@ManyToOne
-	private SiteUser user;
+	private String username;
 	
 	@Column(length = 255)
 	private String image_url;
@@ -43,12 +39,14 @@ public class OwnerPost {
 	private LocalDateTime available_from;
 	private LocalDateTime available_to;
 	
+	private Integer category;
+	
 	@CreatedDate
     @Column(updatable = false)
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 	
 }
 

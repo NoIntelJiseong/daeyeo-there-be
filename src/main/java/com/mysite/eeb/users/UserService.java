@@ -14,7 +14,7 @@ public class UserService {
 	private final PasswordEncoder passwordEncoder;
 	
 	public SiteUser registerUser(SignUpRequest request) {
-        if (userRepository.existByUsername(request.getName())) {
+        if (userRepository.findByName(request.getName()).isPresent()) {
             throw new IllegalArgumentException("Username is already taken.");
         }
 
@@ -31,7 +31,7 @@ public class UserService {
     }
 	
 	public boolean loginUser(LoginRequest request) {
-        SiteUser user = userRepository.findByUsername(request.getUsername())
+        SiteUser user = userRepository.findByName(request.getUsername())
         		.orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         // 비밀번호 비교

@@ -36,11 +36,13 @@ public class BorrowerPost {
 	private LocalDateTime preferred_time_from;
 	private LocalDateTime preferred_time_to;
 	
+	private Integer category;
+	
 	@CreatedDate
     @Column(updatable = false)
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
     
 }
