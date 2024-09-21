@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
-import com.mysite.eeb.users.SiteUser;
-
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -13,4 +11,10 @@ import lombok.RequiredArgsConstructor;
 public class BorrowerPostService {
 	private final BorrowerPostRepository borrowerPostRepository;
 	
+	public void create(BorrowerPost borrowerPost) {
+		borrowerPost.setCreatedAt(LocalDateTime.now());
+		borrowerPost.setUpdatedAt(LocalDateTime.now());
+		
+		borrowerPostRepository.save(borrowerPost);
+	}
 }
