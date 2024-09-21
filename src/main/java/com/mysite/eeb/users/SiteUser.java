@@ -22,7 +22,7 @@ public class SiteUser {
 	@Column(unique = true, length = 100)
 	private String name;
 	
-	@Column(length = 20, nullable = false)
+	@Column(nullable = false)
 	private String password;
 	
 	private Integer rating = 0; // 기본값 0

@@ -1,6 +1,9 @@
 package com.mysite.eeb.users;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDateTime;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +29,21 @@ public class UserService {
         user.setName(request.getName());
         user.setPassword(passwordEncoder.encode(request.getPassword1()));
         user.setRating(0);  // 기본값으로 0 설정
-
+        user.setCrated_at(LocalDateTime.now());
+        user.setUpdated_at(LocalDateTime.now());
+        
+        
         return userRepository.save(user);
     }
 	
 	public boolean loginUser(LoginRequest request) {
-        SiteUser user = userRepository.findByName(request.getUsername())
-        		.orElseThrow(() -> new IllegalArgumentException("User not found"));
-
+		
+		
+		if (!userRepository.findByName(request.getName()).isPresent()) {
+			throw new IllegalArgumentException("User not found");
+		}
+		
+        SiteUser user = (userRepository.findByName(request.getName())).get();
         // 비밀번호 비교
         if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             return true;  // 로그인 성공
