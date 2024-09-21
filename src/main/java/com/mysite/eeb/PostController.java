@@ -16,3 +16,4 @@ public class PostController {
         return postService.getAllPosts(0, 10);
     }
 }
+
