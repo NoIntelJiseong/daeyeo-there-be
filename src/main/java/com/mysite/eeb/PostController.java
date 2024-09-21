@@ -12,9 +12,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/all")
-    public PageResponse<PostResponseDto> getAllPosts(
-            @RequestParam(defaultValue = "0") int page, 
-            @RequestParam(defaultValue = "10") int size) {
-        return postService.getAllPosts(page, size);
+    public PageResponse<PostResponseDto> getAllPosts() {
+        return postService.getAllPosts(0, 10);
     }
 }

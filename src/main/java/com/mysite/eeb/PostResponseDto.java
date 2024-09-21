@@ -5,11 +5,15 @@ import java.time.LocalDateTime;
 import com.mysite.eeb.borrower_posts.BorrowerPost;
 import com.mysite.eeb.owner_posts.OwnerPost;
 
+import lombok.Getter;
+
+@Getter
 public class PostResponseDto {
     private Long id;
     private String title;
     private String description;
     private String postType;  // "owner" 또는 "borrower"로 엔티티 구분
+    private Integer category;
     
     // BorrowerPost 전용 필드
     private LocalDateTime preferredTimeFrom;
@@ -36,6 +40,7 @@ public class PostResponseDto {
         this.preferredTimeTo = borrowerPost.getPreferred_time_to();
         this.createdAt = borrowerPost.getCreatedAt();
         this.updatedAt = borrowerPost.getUpdatedAt();
+        this.category = borrowerPost.getCategory();
     }
 
     // Constructor for OwnerPost
@@ -52,5 +57,6 @@ public class PostResponseDto {
         this.availableTo = ownerPost.getAvailable_to();
         this.createdAt = ownerPost.getCreatedAt();
         this.updatedAt = ownerPost.getUpdatedAt();
+        this.category = ownerPost.getCategory();
     }
 }

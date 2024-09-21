@@ -7,6 +7,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BorrowerPostRepository extends JpaRepository<BorrowerPost, Long> {
-	List<BorrowerPost> findAllByOrderByUpdatedAtDesc();
-	Page<BorrowerPost> findAll(Pageable pageable);
+	Page<BorrowerPost> findAllByOrderByUpdatedAtDesc(Pageable pageable);
 }

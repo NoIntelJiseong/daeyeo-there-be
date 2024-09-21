@@ -2,6 +2,9 @@ package com.mysite.eeb;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public class PageResponse<T> {
     private List<T> content;        // 실제 데이터 목록
     private int currentPage;        // 현재 페이지 번호

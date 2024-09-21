@@ -26,8 +26,8 @@ public class PostService {
         Pageable pageable = PageRequest.of(page, size);
         
         // OwnerPost와 BorrowerPost 각각 페이징
-        Page<OwnerPost> ownerPostsPage = ownerPostRepository.findAll(pageable);
-        Page<BorrowerPost> borrowerPostsPage = borrowerPostRepository.findAll(pageable);
+        Page<OwnerPost> ownerPostsPage = ownerPostRepository.findAllByOrderByUpdatedAtDesc(pageable);
+        Page<BorrowerPost> borrowerPostsPage = borrowerPostRepository.findAllByOrderByUpdatedAtDesc(pageable);
 
         // DTO로 변환하여 합침
         List<PostResponseDto> combinedPosts = new ArrayList<>();
