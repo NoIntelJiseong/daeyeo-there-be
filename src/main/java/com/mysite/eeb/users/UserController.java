@@ -1,10 +1,10 @@
 package com.mysite.eeb.users;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -41,11 +41,30 @@ public class UserController {
         }
     }
     
-    @GetMapping("/{name}")
-    public ResponseEntity<SiteUser> find(@PathVariable String name) {
-    	return userRepository.findByName(name)
-                .map(siteUser -> ResponseEntity.ok(siteUser))  // 성공 시 200 OK와 함께 엔티티 반환
-                .orElseGet(() -> ResponseEntity.notFound().build());  // 엔티티가 없을 경우 404 Not Found 반환
+    @GetMapping("/search")
+    public ResponseEntity<?> getUserByUsername(@RequestParam("name") String name) {
+    	SiteUser user = userRepository.findByName(name)
+    			.orElseThrow(() -> new IllegalArgumentException("User not found with username: " + name));
+    	
+    	UserResponseDTO responseDTO = new UserResponseDTO(user.getName(), user.getRating());
+
+        return ResponseEntity.ok(responseDTO);
+    }
+    
+    @PostMapping("/raitingUp")
+    public ResponseEntity<String> upRaiting(@RequestBody SiteUser user) {
+    	SiteUser u = userRepository.findByName(user.getName()).get();
+    	u.setRating(u.getRating() + 10);
+    	userRepository.save(u);
+    	return ResponseEntity.ok("");
+    }
+    
+    @PostMapping("/raitingDown")
+    public ResponseEntity<String> downRaiting(@RequestBody SiteUser user) {
+    	SiteUser u = userRepository.findByName(user.getName()).get();
+    	u.setRating(u.getRating() - 10);
+    	userRepository.save(u);
+    	return ResponseEntity.ok("");
     }
 }
     

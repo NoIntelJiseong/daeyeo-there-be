@@ -1,20 +1,24 @@
 package com.mysite.eeb.rentals;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/rentals")
 public class RentalController {
 
     private final RentalRepository rentalRepository;
+    private final RentalService rentalService;
 
-    public RentalController(RentalRepository rentalRepository) {
-        this.rentalRepository = rentalRepository;
-    }
 
     @GetMapping
     public List<Rental> getAllRentals() {
@@ -22,12 +26,15 @@ public class RentalController {
     }
 
     @PostMapping
-    public ResponseEntity<Rental> createRental(@RequestBody Rental rental) {
-        rental.setStatus(1);
-        rental.setCreatedAt(LocalDateTime.now());
-        rental.setUpdatedAt(LocalDateTime.now());
-    	
-    	Rental newRental = rentalRepository.save(rental);
-        return ResponseEntity.status(201).body(newRental);
+    public ResponseEntity<Rental> createRental(@RequestBody RentalRequestDTO rentalRequestDTO) {
+        Rental rental = rentalService.createRental(
+            rentalRequestDTO.getOwnerPostId(),
+            rentalRequestDTO.getBorrowerPostId(),
+            rentalRequestDTO.getOwnerUsername(),
+            rentalRequestDTO.getBorrowerUsername(),
+            rentalRequestDTO.getRentalStartTime(),
+            rentalRequestDTO.getRentalEndTime()
+        );
+        return ResponseEntity.ok(rental);
     }
 }

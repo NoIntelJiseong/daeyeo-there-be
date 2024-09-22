@@ -22,24 +22,23 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 물주의 게시물 ID (OwnerPost ID와 연결)
+ // 물주의 게시물 (OwnerPost 또는 BorrowerPost)
     @ManyToOne
-    @JoinColumn(name = "ownerPostId")
+    @JoinColumn(name = "owner_post_id", nullable = true)
     private OwnerPost ownerPost;
 
-    // 대여인의 게시물 ID (BorrowerPost ID와 연결)
     @ManyToOne
-    @JoinColumn(name = "borrowerPostId")
+    @JoinColumn(name = "borrower_post_id", nullable = true)
     private BorrowerPost borrowerPost;
-    
-    // 물주 (Owner)
+
+    // 물주
     @ManyToOne
-    @JoinColumn(name = "ownerId")
+    @JoinColumn(name = "owner_id", nullable = false)
     private SiteUser owner;
 
-    // 대여인 (Borrower)
+    // 대여인
     @ManyToOne
-    @JoinColumn(name = "borrowerId")
+    @JoinColumn(name = "borrower_id", nullable = false)
     private SiteUser borrower;
 
     // 대여 시작 시간
