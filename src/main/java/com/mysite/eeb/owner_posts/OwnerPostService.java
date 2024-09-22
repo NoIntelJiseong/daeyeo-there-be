@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.mysite.eeb.users.SiteUser;
-
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -18,24 +16,15 @@ public class OwnerPostService {
 		return this.ownerPostRepository.findAll();
 	}
 	
-	public void create(SiteUser user, String title, String description, String image_url, Integer cost_hour, Integer cost_day, Integer cost_week, LocalDateTime available_from, LocalDateTime available_to) {
-		OwnerPost o = new OwnerPost();
+	public void create(OwnerPost ownerPost) {
+		ownerPost.setCreatedAt(LocalDateTime.now());
+		ownerPost.setUpdatedAt(LocalDateTime.now());
 		
-		o.setUser(user);
-		
-		o.setTitle(title);
-		o.setDescription(description);
-		
-		o.setImage_url(image_url);
-		
-		o.setCost_hour(cost_hour);
-		o.setCost_day(cost_day);
-		o.setCost_week(cost_week);
-		
-		
-		o.setAvailable_from(available_from);
-		o.setAvailable_to(available_to);
-		
-		this.ownerPostRepository.save(o);	
+		ownerPostRepository.save(ownerPost);
 	}
+	
+	public OwnerPost getOwnerPostById(Long id) {
+        return ownerPostRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("OwnerPost not found with id: " + id));
+    }
 }

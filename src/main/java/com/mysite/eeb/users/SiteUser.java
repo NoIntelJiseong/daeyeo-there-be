@@ -22,10 +22,10 @@ public class SiteUser {
 	@Column(unique = true, length = 100)
 	private String name;
 	
-	@Column(length = 20)
+	@Column(nullable = false)
 	private String password;
 	
-	private Integer rating;
+	private Integer rating = 0; // 기본값 0
 	
 	private LocalDateTime crated_at;
 	
