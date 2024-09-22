@@ -4,9 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
-import com.mysite.eeb.borrower_posts.BorrowerPost;
 import com.mysite.eeb.borrower_posts.BorrowerPostRepository;
-import com.mysite.eeb.owner_posts.OwnerPost;
 import com.mysite.eeb.owner_posts.OwnerPostRepository;
 import com.mysite.eeb.users.SiteUser;
 import com.mysite.eeb.users.UserRepository;
@@ -23,37 +21,26 @@ public class RentalService {
     private final BorrowerPostRepository borrowerPostRepository;
 
     public Rental createRental(Long ownerPostId, Long borrowerPostId, String ownerUsername, String borrowerUsername, 
-                               LocalDateTime startTime, LocalDateTime endTime) {
+            LocalDateTime rentalStartTime, LocalDateTime rentalEndTime, int status) {
 
-        // 사용자 및 게시물 검색
-        SiteUser owner = userRepository.findByName(ownerUsername)
-            .orElseThrow(() -> new IllegalArgumentException("Owner not found"));
-        SiteUser borrower = userRepository.findByName(borrowerUsername)
-            .orElseThrow(() -> new IllegalArgumentException("Borrower not found"));
+    	// 물주와 대여인 유저를 데이터베이스에서 가져옴
+    	SiteUser owner = userRepository.findByName(ownerUsername)
+    			.orElseThrow(() -> new IllegalArgumentException("Owner user not found: " + ownerUsername));
 
-        OwnerPost ownerPost = null;
-        BorrowerPost borrowerPost = null;
-        
-        // 게시물이 OwnerPost인지 BorrowerPost인지 확인
-        if (ownerPostId != null) {
-            ownerPost = ownerPostRepository.findById(ownerPostId)
-                .orElseThrow(() -> new IllegalArgumentException("OwnerPost not found"));
-        } else if (borrowerPostId != null) {
-            borrowerPost = borrowerPostRepository.findById(borrowerPostId)
-                .orElseThrow(() -> new IllegalArgumentException("BorrowerPost not found"));
-        }
+    	SiteUser borrower = userRepository.findByName(borrowerUsername)
+    			.orElseThrow(() -> new IllegalArgumentException("Borrower user not found: " + borrowerUsername));
 
-        // Rental 생성
-        Rental rental = new Rental();
-        rental.setOwnerPost(ownerPost);
-        rental.setBorrowerPost(borrowerPost);
-        rental.setOwner(owner);
-        rental.setBorrower(borrower);
-        rental.setRentalStartTime(startTime);
-        rental.setRentalEndTime(endTime);
-        rental.setStatus(1);
+    	// Rental 엔티티 생성
+    	Rental rental = new Rental();
+    	rental.setOwnerPostId(ownerPostId);
+    	rental.setBorrowerPostId(borrowerPostId);
+    	rental.setOwner(owner);
+    	rental.setBorrower(borrower);
+    	rental.setRentalStartTime(rentalStartTime);
+    	rental.setRentalEndTime(rentalEndTime);
+    	rental.setStatus(status); // 정수형으로 대여 상태 설정
 
-        // Rental 저장
-        return rentalRepository.save(rental);
+    	// Rental 엔티티 저장
+    	return rentalRepository.save(rental);
     }
 }

@@ -18,4 +18,6 @@ public class OwnerPostController {
 		ownerPostService.create(ownerPost);
 	    return ResponseEntity.ok("Owner post created.");
 	}
+	
+	
 }

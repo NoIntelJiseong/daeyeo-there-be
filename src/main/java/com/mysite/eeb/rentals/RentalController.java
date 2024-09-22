@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rentals")
+@RequestMapping("/rental")
 public class RentalController {
 
     private final RentalRepository rentalRepository;
@@ -25,16 +25,32 @@ public class RentalController {
         return rentalRepository.findAll();
     }
 
-    @PostMapping
-    public ResponseEntity<Rental> createRental(@RequestBody RentalRequestDTO rentalRequestDTO) {
+    // 대여 생성 요청 처리
+    @PostMapping("/create")
+    public ResponseEntity<RentalResponse> createRental(@RequestBody RentalRequestDTO rentalRequest) {
+        // Rental 생성
         Rental rental = rentalService.createRental(
-            rentalRequestDTO.getOwnerPostId(),
-            rentalRequestDTO.getBorrowerPostId(),
-            rentalRequestDTO.getOwnerUsername(),
-            rentalRequestDTO.getBorrowerUsername(),
-            rentalRequestDTO.getRentalStartTime(),
-            rentalRequestDTO.getRentalEndTime()
+            rentalRequest.getOwnerPostId(),
+            rentalRequest.getBorrowerPostId(),
+            rentalRequest.getOwnerUsername(),
+            rentalRequest.getBorrowerUsername(),
+            rentalRequest.getRentalStartTime(),
+            rentalRequest.getRentalEndTime(),
+            rentalRequest.getStatus()  // 정수형 status
         );
-        return ResponseEntity.ok(rental);
+
+        // Rental을 RentalResponse DTO로 변환
+        RentalResponse response = new RentalResponse();
+        response.setId(rental.getId());
+        response.setOwnerPostId(rental.getOwnerPostId());
+        response.setBorrowerPostId(rental.getBorrowerPostId());
+        response.setOwnerUsername(rental.getOwner().getName());
+        response.setBorrowerUsername(rental.getBorrower().getName());
+        response.setRentalStartTime(rental.getRentalStartTime());
+        response.setRentalEndTime(rental.getRentalEndTime());
+        response.setStatus(rental.getStatus());
+        
+        // 생성된 Rental 객체 반환
+        return ResponseEntity.ok(response);
     }
 }
